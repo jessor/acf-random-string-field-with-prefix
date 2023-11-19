@@ -6,8 +6,8 @@
 		$('.acf-random-string-field-button').on('click', function(e){
 
 			var string_length = $(this).attr('data-length');
-			var alphanumeric = $(this).attr('data-alphanumeric');
-			var my_prefix    = $(this).attr('data-my-prefix');
+			var alphanumeric  = $(this).attr('data-alphanumeric');
+			var my_prefix     = $(this).attr('data-my-prefix');
 
 			var random_string = "";
 		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#%!&*$@";
@@ -19,8 +19,24 @@
 		    for( var i=0; i < string_length; i++ )
 		        random_string += possible.charAt(Math.floor(Math.random() * possible.length));
 
+			var date = new Date();
+
+			var mergeTags = {
+				'{year}'   : date.getUTCFullYear(),
+				'{month}'  : date.getUTCMonth() + 1,
+				'{day}'    : date.getUTCDate(),
+				'{hour}'   : date.getUTCHours(),
+				'{minutes}': date.getUTCMinutes(),
+				'{seconds}': date.getUTCSeconds()
+			};
+
+			var myRegex = new RegExp('(' + Object.keys(mergeTags).join('|') + ')', 'gi');
+
+			my_prefix = my_prefix.replace(myRegex, function(match){
+				return mergeTags['' + match + ''];
+			});
+
 			random_string = my_prefix + random_string;
-			console.log( random_string );
 
 		    $(this).siblings('.acf-random-string-field-input').val(random_string);
 

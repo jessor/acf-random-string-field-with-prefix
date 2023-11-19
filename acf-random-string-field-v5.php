@@ -111,7 +111,7 @@ class acf_field_random_string extends acf_field {
 
 		acf_render_field_setting( $field, array(
 			'label'			=> __('Prefix','acf-random-string'),
-			'instructions'	=> __('e.g. \'xy_\'','acf-random-string'),
+			'instructions'	=> __('e.g. \'xy_\'. Available Merge Tags: `{year}`, `{month}`, `{day}`, `{hour}`, `{minutes}`, `{seconds}`.','acf-random-string'),
 			'name'			=> 'my-prefix'
 		));
 
@@ -190,7 +190,7 @@ class acf_field_random_string extends acf_field {
 
 
 		// register & include JS
-		wp_register_script( 'acf-input-random-string', "{$dir}js/input.js" );
+		wp_register_script( 'acf-input-random-string', "{$dir}js/input.js", array(), '2' );
 		wp_enqueue_script('acf-input-random-string');
 
 
